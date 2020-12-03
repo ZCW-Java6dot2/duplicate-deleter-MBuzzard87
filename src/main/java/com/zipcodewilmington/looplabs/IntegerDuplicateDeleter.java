@@ -28,7 +28,7 @@ public final class IntegerDuplicateDeleter extends DuplicateDeleter<Integer> {
 
         for (int i = 0; i < counter.length; i++) {
             for (int j = 0; j < counter.length; j++) {
-                if (intArr[i].equals(intArr[j])) {
+                if (intArr[i] == intArr[j]) {
                     counter[i]++;
                 }
             }
