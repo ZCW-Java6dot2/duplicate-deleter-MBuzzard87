@@ -11,48 +11,71 @@ import java.util.List;
  * @ATTENTION_TO_STUDENTS You are forbidden from modifying the signature of this class.
  */
 public final class IntegerDuplicateDeleter extends DuplicateDeleter<Integer> {
-    private Integer[] removeArr;
+    private Integer[] intArr;
 
     public IntegerDuplicateDeleter(Integer[] intArr) {
         super(intArr);
-        this.removeArr = intArr;
+        this.intArr = intArr;
     }
 
 
-    @Override
-    public Integer[] removeDuplicates(int maxNumberOfDuplications) {
-        List<Integer> intList = new ArrayList<>();
-        List<Integer> storeRemovedInt = new ArrayList<>();
-        for (Integer addToList : removeArr) {
-            intList.add(addToList);
+    public Integer[] countIntArr() {
+        Integer[] counter = new Integer[intArr.length];
+
+        for (int j = 0; j < intArr.length; j++) {
+            counter[j] = 0;
         }
-        for (Integer freqInt : intList) {
-            if (Collections.frequency(intList,freqInt) >= maxNumberOfDuplications) {
-                storeRemovedInt.add(freqInt);
+
+        for (int i = 0; i < counter.length; i++) {
+            for (int j = 0; j < counter.length; j++) {
+                if (intArr[i].equals(intArr[j])) {
+                    counter[i]++;
+                }
             }
         }
-        intList.removeAll(storeRemovedInt);
-        Integer[] updatedArr = new Integer[intList.size()];
-        intList.toArray(updatedArr);
-        return updatedArr;
+        return counter;
+    }
+
+    @Override
+    public Integer[] removeDuplicates(int maxNumberOfDuplications) {
+        int incrementArr = 0;
+        int arrSize = 0;
+        Integer[] counter = countIntArr();
+        for (int i = 0; i < intArr.length; i++) {
+            if (counter[i] < maxNumberOfDuplications) {
+                arrSize++;
+            }
+        }
+        Integer[] newIntArr = new Integer[arrSize];
+        for (int j = 0;j < intArr.length; j++) {
+            if (counter[j] < maxNumberOfDuplications) {
+
+                newIntArr[incrementArr] = intArr[j];
+                incrementArr++;
+            }
+        }
+        return newIntArr;
     }
 
     @Override
     public Integer[] removeDuplicatesExactly(int exactNumberOfDuplications) {
-        List<Integer> intList = new ArrayList<>();
-        List<Integer> storeRemovedInt = new ArrayList<>();
-        for (Integer addToList : removeArr) {
-            intList.add(addToList);
-        }
-        for (Integer freqInt : intList) {
-            if (Collections.frequency(intList,freqInt) == exactNumberOfDuplications) {
-                storeRemovedInt.add(freqInt);
+        int incrementArr = 0;
+        int arrSize = 0;
+        Integer[] counter = countIntArr();
+        for (int i = 0; i < counter.length; i++) {
+            if (counter[i] != exactNumberOfDuplications) {
+                arrSize++;
             }
         }
-        intList.removeAll(storeRemovedInt);
-        Integer[] updatedArr = new Integer[intList.size()];
-        intList.toArray(updatedArr);
-        return updatedArr;
+        Integer[] newIntArr = new Integer[arrSize];
+        for (int j = 0;j < intArr.length; j++) {
+            if (counter[j] != exactNumberOfDuplications) {
+
+                newIntArr[incrementArr] = intArr[j];
+                incrementArr++;
+            }
+        }
+        return newIntArr;
     }
 
 
